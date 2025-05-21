@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { query } from "./utils/db";
 
 dotenv.config();
 
@@ -15,4 +16,13 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
+});
+
+app.get("/testeBanco", async (req, res) => {
+  try {
+    const users = await query("SELECT * FROM users");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Erro na conexão com o banco", error });
+  }
 });
