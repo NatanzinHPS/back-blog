@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { query } from "./utils/db";
 import authRoutes from "./routes/auth.routes";
+import articleRoutes from "./routes/article.routes"
 
 dotenv.config();
 
@@ -29,3 +30,4 @@ app.get("/testeBanco", async (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/articles", articleRoutes);
