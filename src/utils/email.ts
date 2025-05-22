@@ -7,8 +7,8 @@ export var transporter = nodemailer.createTransport({
   port: 2525,
   auth: {
     user: "3a9a8dc12bfc3c",
-    pass: "542795442b8ab6"
-  }
+    pass: "542795442b8ab6",
+  },
 });
 
 export const sendResetEmail = async (to: string, token: string) => {

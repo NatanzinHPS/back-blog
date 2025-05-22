@@ -9,7 +9,6 @@ import {
   changePassword,
 } from "../controllers/user.controller";
 
-
 const router = Router();
 
 router.get("/profile", auth, getProfile);
@@ -31,12 +30,12 @@ router.put(
   auth,
   [
     body("currentPassword").notEmpty().withMessage("Senha atual é obrigatória"),
-    body("newPassword").isLength({ min: 6 }).withMessage("Nova senha deve ter ao menos 6 caracteres"),
+    body("newPassword")
+      .isLength({ min: 6 })
+      .withMessage("Nova senha deve ter ao menos 6 caracteres"),
   ],
   validate,
   changePassword
 );
-
-
 
 export default router;

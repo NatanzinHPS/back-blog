@@ -7,7 +7,10 @@ export const getProfile = async (req: AuthRequest, res: Response) => {
   const userId = req.user.id;
 
   try {
-    const result: any = await query("SELECT id, name, email, image FROM users WHERE id = ?", [userId]);
+    const result: any = await query(
+      "SELECT id, name, email, image FROM users WHERE id = ?",
+      [userId]
+    );
     const user = result[0];
 
     if (user.image)
@@ -58,11 +61,14 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
   const { currentPassword, newPassword } = req.body;
 
   try {
-    const result: any = await query("SELECT password FROM users WHERE id = ?", [userId]);
+    const result: any = await query("SELECT password FROM users WHERE id = ?", [
+      userId,
+    ]);
     const user = result[0];
 
     const isMatch = await bcrypt.compare(currentPassword, user.password);
-    if (!isMatch) return res.status(401).json({ message: "Senha atual incorreta" });
+    if (!isMatch)
+      return res.status(401).json({ message: "Senha atual incorreta" });
 
     const hashed = await bcrypt.hash(newPassword, 10);
     await query("UPDATE users SET password = ? WHERE id = ?", [hashed, userId]);

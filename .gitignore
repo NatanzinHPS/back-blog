@@ -1,2 +1,9 @@
 .env
 /node_modules
+dist/
+build/
+*.log
+.env.local
+.env.*.local
+.vscode/
+.idea/
