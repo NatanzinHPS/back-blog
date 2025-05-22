@@ -2,6 +2,7 @@ import { Router } from "express";
 import { body } from "express-validator";
 import { register, login } from "../controllers/auth.controller";
 import validate from "../middlewares/validate";
+import { forgotPassword, resetPassword } from "../controllers/auth.controller";
 
 const router = Router();
 
@@ -26,4 +27,20 @@ router.post(
   login
 );
 
+router.post(
+  "/forgot-password",
+  [body("email").isEmail().withMessage("Email inválido")],
+  validate,
+  forgotPassword
+);
+
+router.post(
+  "/reset-password",
+  [
+    body("token").notEmpty().withMessage("Token obrigatório"),
+    body("newPassword").isLength({ min: 6 }).withMessage("Nova senha fraca"),
+  ],
+  validate,
+  resetPassword
+);
 export default router;

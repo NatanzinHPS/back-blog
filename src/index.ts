@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { query } from "./utils/db";
 import authRoutes from "./routes/auth.routes";
-import articleRoutes from "./routes/article.routes"
+import articleRoutes from "./routes/article.routes";
+import userRoutes from "./routes/user.routes";
+import { transporter } from "./utils/email";
 
 dotenv.config();
 
@@ -32,4 +34,12 @@ app.get("/testeBanco", async (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/articles", articleRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use("/api/users", userRoutes);
 
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Erro na conexão SMTP:", error);
+  } else {
+    console.log("Servidor SMTP pronto para envio");
+  }
+});
